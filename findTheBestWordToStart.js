@@ -34,7 +34,7 @@ const readTextFile =  (fileName) => {
     }
   })
 
-  console.log(wordList)
+  // console.log(wordList)
   return wordList
 
 }

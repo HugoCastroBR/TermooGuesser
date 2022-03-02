@@ -150,51 +150,17 @@ const getPossibleWords = () => {
         isWordPossible = false
       }
     })
-    if(positions[0] !== '') {
-      if(word[0] !== positions[0]) {
-        isWordPossible = false
-      }
 
-    }
-    if(positions[1] !== '') {
-      if(word[1] !== positions[1]) {
+    for(let i = 0; i < 5; i++) {
+      if(positions[i] !== '') {
+        if(word[i] !== positions[i]) {
+          isWordPossible = false
+        }
+      }
+      if(letterNotIn?.[word[i]] === i) {
         isWordPossible = false
       }
     }
-    if(positions[2] !== '') {
-      if(word[2] !== positions[2]) {
-        isWordPossible = false
-      }
-    }
-    if(positions[3] !== '') {
-      if(word[3] !== positions[3]) {
-        isWordPossible = false
-      }
-    }
-    if(positions[4] !== '') {
-      if(word[4] !== positions[4]) {
-        isWordPossible = false
-      }
-    }
-
-    if(letterNotIn?.[word[0]] === 0) {
-      isWordPossible = false
-    }
-    if(letterNotIn?.[word[1]] === 1) {
-      isWordPossible = false
-    }
-    if(letterNotIn?.[word[2]] === 2) {
-      isWordPossible = false
-    }
-    if(letterNotIn?.[word[3]] === 3) {
-      isWordPossible = false
-    }
-    if(letterNotIn?.[word[4]] === 4) {
-      isWordPossible = false
-    }
-
-    
-
 
     return isWordPossible
   })
@@ -217,93 +183,44 @@ const getReview = () => {
   console.log('\n')
   console.log('You played: ', lastWord)
   console.log('\n')
-  let firstWordStatus = Number(prompt('Enter the Status for the first Letter: '))
-  let secondWordStatus = Number(prompt('Enter the Status for the second Letter: '))
-  let thirdWordStatus = Number(prompt('Enter the Status for the third Letter: '))
-  let fourthWordStatus = Number(prompt('Enter the Status for the fourth Letter: '))
-  let fifthWordStatus = Number(prompt('Enter the Status for the fifth Letter: '))
-
- 
 
 
+  const wordsInput = []
 
-
-
-  if(firstWordStatus === 2) {
-    usedLetters.push(lastWord[0])
-    positions[0] = lastWord[0]
-  }
-  if(secondWordStatus === 2) {
-    usedLetters.push(lastWord[1])
-    positions[1] = lastWord[1]
-  }
-  if(thirdWordStatus === 2) {
-    usedLetters.push(lastWord[2])
-    positions[2] = lastWord[2]
-  }
-  if(fourthWordStatus === 2) {
-    usedLetters.push(lastWord[3])
-    positions[3] = lastWord[3]
-  }
-  if(fifthWordStatus === 2) {
-    usedLetters.push(lastWord[4])
-    positions[4] = lastWord[4]
+  for(let i = 0; i < 5; i++){
+    wordsInput.push(Number(prompt('Enter the Status for the ' + (i+1) + ' Letter: ')))
   }
 
-  if(firstWordStatus === 1) {
-    addJustDifferentLetters([lastWord[0]], CorrectLetters)
-    letterNotIn[lastWord[0]] = 0
-  }
-  if(secondWordStatus === 1) {
-    addJustDifferentLetters([lastWord[1]], CorrectLetters)
-    letterNotIn[lastWord[1]] = 1
-  }
-  if(thirdWordStatus === 1) {
-    addJustDifferentLetters([lastWord[2]], CorrectLetters)
-    letterNotIn[lastWord[2]] = 2
-  }
-  if(fourthWordStatus === 1) {
-    addJustDifferentLetters([lastWord[3]], CorrectLetters)
-    letterNotIn[lastWord[3]] = 3
-  }
-  if(fifthWordStatus === 1) {
-    addJustDifferentLetters([lastWord[4]], CorrectLetters)
-    letterNotIn[lastWord[4]] = 4
-  }
-
-
-  if(firstWordStatus === 0) {
-    if(!positions.includes(lastWord[0])) {
-      impossibleLetters.push(lastWord[0])
+  for(let i = 0; i < 5; i++){
+    if(wordsInput[i] === 2) {
+      usedLetters.push(lastWord[i])
+      positions[i] = lastWord[i]
     }
   }
-  if(secondWordStatus === 0) {
-    if(!positions.includes(lastWord[1])) {
-      impossibleLetters.push(lastWord[1])
+
+  for(let i = 0; i < 5; i++){
+    if(wordsInput[i] === 1) {
+      addJustDifferentLetters([lastWord[i]], CorrectLetters)
+      letterNotIn[lastWord[i]] = i
     }
   }
-  if(thirdWordStatus === 0) {
-    if(!positions.includes(lastWord[2])) {
-      impossibleLetters.push(lastWord[2])
+
+  for(let i = 0; i < 5; i++){
+    if(wordsInput[i] === 0) {
+      if(!positions.includes(lastWord[i])) {
+        impossibleLetters.push(lastWord[i])
+      }
     }
   }
-  if(fourthWordStatus === 0) {
-    if(!positions.includes(lastWord[3])) {
-      impossibleLetters.push(lastWord[3])
-    }
-  }
-  if(fifthWordStatus === 0) {
-    if(!positions.includes(lastWord[4])) {
-      impossibleLetters.push(lastWord[4])
-    }
-  }
+
+
 
   gameInfos[lastWord] = {
-    firstWordStatus,
-    secondWordStatus,
-    thirdWordStatus,
-    fourthWordStatus,
-    fifthWordStatus
+    firstWordStatus : wordsInput[0],
+    secondWordStatus : wordsInput[1],
+    thirdWordStatus : wordsInput[2],
+    fourthWordStatus : wordsInput[3],
+    fifthWordStatus : wordsInput[4]
   }
 
 
